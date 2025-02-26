@@ -8,7 +8,9 @@ using System.Xml.Serialization;
 namespace Bai2_Enum
     {
         internal class Program
-        {
+    {
+
+        // Định nghĩa Enum WeekDays(Các ngày trong tuần)
         enum WeekDays
             {
                 Monday,
@@ -33,7 +35,7 @@ namespace Bai2_Enum
                 int luaChon = -1;
                 while (luaChon != 0){
 
-                Console.WriteLine("===> Chọn cách lấy giá trị Enum <===");
+                Console.WriteLine("\n===> Chọn cách lấy giá trị Enum <===");
                 Console.WriteLine("1. Nhập số thứ tự để lấy tên ngày");
                 Console.WriteLine("2. Nhập tên ngày để lấy số thứ tự");
                 Console.WriteLine("0. Thoát");
@@ -45,37 +47,37 @@ namespace Bai2_Enum
                 };
 
                 switch (luaChon){
-                        case '1':
-                        //Nhập số thứ tự để lấy tên ngày
-                        break;
+                        case 1:
+                            //Nhập số thứ tự để lấy tên ngày
+                            int viTri;
+                            Console.Write("\nNhập số thứ tự (0-6): ");                      
+                            while (!int.TryParse(Console.ReadLine(), out viTri) || viTri < 0 || viTri > 6)
+                            {
+                                Console.Write("Số không hợp lệ! Nhập lại: ");
+                            }
+                            Console.WriteLine("Ngày tương ứng: " + (WeekDays)viTri);
+                            break;
 
-                        case '2':
-                        //Nhập tên ngày để lấy số thứ tự
-                        break;
+                        case 2:
+                            //Nhập tên ngày để lấy số thứ tự
+                            Console.Write("\nNhập tên ngày (ví dụ: Monday): ");
+                            string input = Console.ReadLine();
+                            if (Enum.TryParse(input, true, out WeekDays dayEnum)) // IgnoreCase = true để không phân biệt hoa thường
+                        {
+                                Console.WriteLine("Số thứ tự của {0} là: {1} ", input, (int)dayEnum);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Tên không hợp lệ!");
+                            }
+                            break;
 
-                        case '0':
+                        case 0:
                             Console.WriteLine("\nKết thúc chương trình!");
                             break;
 
                 }
-                };
-
-                // 2. Lấy tên của một giá trị Enum cụ thể
-                Console.WriteLine("\nDay at index 4: " + Enum.GetName(typeof(WeekDays), 4));
-
-                // 3. Chuyển đổi chuỗi thành giá trị Enum
-                WeekDays day = (WeekDays)Enum.Parse(typeof(WeekDays), "Friday");
-                Console.WriteLine("\nParsed from string: " + day);
-
-                // 4. Dùng TryParse để tránh lỗi khi chuyển đổi chuỗi không hợp lệ
-                if (Enum.TryParse("Holiday", out WeekDays invalidDay))
-                {
-                    Console.WriteLine("\nParsed successfully: " + invalidDay);
-                }
-                else
-                {
-                    Console.WriteLine("\nInvalid Enum value: 'Holiday'");
-                }
+                };           
         }
         }
     }
