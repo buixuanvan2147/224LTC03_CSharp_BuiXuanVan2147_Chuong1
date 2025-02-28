@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace Bai3_KetHop_OptionalParameter_Enum
 {
     internal class Program
-    {
-        //Enum chứa tháng và số ngày tương ứng của tháng
-        enum MenuDoUongEnum
+    {        
+        enum MenuDoUongEnum //Enum chứa tháng và số ngày tương ứng của tháng
         {
             CaPheSua = 25000,
             CaPheDen = 20000,
@@ -18,8 +17,7 @@ namespace Bai3_KetHop_OptionalParameter_Enum
             NuocCam = 30000
         }
 
-        //Hàm xuất menu ra màn hình
-        static void xuatMenu()
+        static void xuatMenu() //Hàm xuất menu ra màn hình
         {
             //In hết menu đồ uống ra màn hình
             Console.WriteLine("========>>> MENU <<<========\n");
@@ -29,9 +27,30 @@ namespace Bai3_KetHop_OptionalParameter_Enum
             }
             Console.WriteLine("============================");
         }
+        
+        static bool nhapVaKiemTraDoUong(out MenuDoUongEnum doUong) // Hàm nhập và kiểm tra đồ uống gọi lại trong case1 và case2
+        {
+            while (true)
+            {
+                Console.Write("\nNhập tên đồ uống (hoặc 0 để quay lại): ");
+                string tenDoUong = Console.ReadLine();
 
-        //tính tổng tiền áp dụng optional parameter đối với giảm giá
-        static double tinhTongTienNuoc(int gia, int SoLuong, int mucGiamGia = 5)
+                if (tenDoUong == "0")
+                {
+                    doUong = 0; // Trả về giá trị mặc định
+                    return false; // Người dùng muốn thoát
+                }
+
+                if (Enum.TryParse(tenDoUong, true, out doUong) && Enum.IsDefined(typeof(MenuDoUongEnum), doUong))
+                {
+                    return true; // Nhập thành công
+                }
+
+                Console.WriteLine("Tên đồ uống không hợp lệ! Vui lòng nhập lại.");
+            }
+        }
+
+        static double tinhTongTienNuoc(int gia, int SoLuong, int mucGiamGia = 5) //tính tổng tiền áp dụng optional parameter đối với giảm giá
         {
             return gia * SoLuong * (double)(100 - mucGiamGia) / 100;
         }
@@ -62,65 +81,21 @@ namespace Bai3_KetHop_OptionalParameter_Enum
                 {
                     case 1:
                         //Nhập tên nước để xem giá
-                        Console.Write("\nNhập tên đồ uống (VD: TraChanh): ");
-                        string tenDoUong_147 = Console.ReadLine();
-                        MenuDoUongEnum doUong;
-                        bool kiemTra = Enum.TryParse(tenDoUong_147, true, out doUong) && Enum.IsDefined(typeof(MenuDoUongEnum), doUong);
-
-                        while (!kiemTra)
-                        {
-                            Console.WriteLine("Tên đồ uống không hợp lệ!");
-                            Console.Write("\nNhập lại tên đồ uống (nhập 0 để quay lại): ");
-                            tenDoUong_147 = Console.ReadLine();
-
-                            if (tenDoUong_147 == "0")
-                            {
-                                break;
-                            }
-
-                            kiemTra = Enum.TryParse(tenDoUong_147, true, out doUong) && Enum.IsDefined(typeof(MenuDoUongEnum), doUong);
-                        }
-                        if (tenDoUong_147 == "0")
-                        {
-                            break;
-                        }
-                        // Nếu kiểm tra thành công, in giá đồ uống
-                        if (kiemTra)
+                        if (nhapVaKiemTraDoUong(out MenuDoUongEnum doUong)) //gọi hàm nhập tên đồ uống
                         {
                             Console.WriteLine($"Giá của {doUong} là {(int)doUong} VNĐ");
-                        }                    
+                        }
                         break;
 
                     case 2:// Đặt nước
                         
-                        //Khai bao bien
-                        string tenNuoc_147;
+                        //Khai báo biến
                         int soLuong_147;
                         string giamGia_147;
                         int mucGiamGia_147;
                         double thanhTien;
 
-                        //Nhập tên đồ uống
-                        Console.Write("\nNhập tên đồ uống: ");
-                        tenNuoc_147 = Console.ReadLine();
-                        MenuDoUongEnum nuocDat;
-                        bool kiemTraNuoc = Enum.TryParse(tenNuoc_147, true, out nuocDat) && Enum.IsDefined(typeof(MenuDoUongEnum), nuocDat);
-
-                        while (!kiemTraNuoc)
-                        {
-                            Console.WriteLine("Tên đồ uống không hợp lệ!");
-                            Console.Write("\nNhập lại tên đồ uống (nhập 0 để quay lại): ");
-                            tenNuoc_147 = Console.ReadLine();
-
-                            if (tenNuoc_147 == "0")
-                            {
-                                break;
-                            }
-
-                            kiemTra = Enum.TryParse(tenNuoc_147, true, out nuocDat) && Enum.IsDefined(typeof(MenuDoUongEnum), nuocDat);
-                        }
-
-                        if (kiemTraNuoc)
+                        if (nhapVaKiemTraDoUong(out MenuDoUongEnum nuocDat))
                         {
                             //Nhập số lượng
                             Console.Write("Nhập số lượng: ");
