@@ -151,7 +151,7 @@ namespace BuiXuanVan147_BaiTapOOP
                             Console.Write("Giờ làm phải lớn hơn 0! Nhập lại: ");
                         }
 
-                        PartTimeEmployee_147 newPartTimeEmployee_147 = new PartTimeEmployee_147(namePT_147, paymentPerHourPT_147, workingHoursPT_147);
+                        PartTimeEmployee_147 newPartTimeEmployee_147 = new PartTimeEmployee_147(namePT_147, paymentPerHourPT_147, workingHoursPT_147);  
                         partTimeEmployees_147.Add(newPartTimeEmployee_147);
                         Console.WriteLine("Thêm nhân viên Part-Time thành công!\n");
                         break;
