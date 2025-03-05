@@ -33,6 +33,7 @@ namespace BuiXuanVan147_BaiTapOOP
         }
 
         // Phương thức get tên nhân viên
+
         public string GetName_147()
         {
             return this.name_147;
@@ -53,6 +54,52 @@ namespace BuiXuanVan147_BaiTapOOP
         // Phương thức tính lương để gọi lại ở các class con
         public abstract int CalculateSalary_147();
     }
+
+    // Class con PartTimeE conmployee_147 kế thừa từ Employee_147 (Nhân viên bán thời gian)
+    public class PartTimeEmployee_147 : Employee_147
+    {
+        private int workingHours_147; // Số giờ làm việc mỗi ngày
+
+        // Constructor khởi tạo giá trị
+        public PartTimeEmployee_147(string name_147, int paymentPerHour_147, int workingHours_147)
+            : base(name_147, paymentPerHour_147)
+        {
+            this.workingHours_147 = workingHours_147;
+        }
+
+        // Phương thức set số giờ làm việc
+        public void SetWorkingHours_147(int workingHours_147)
+        {
+            this.workingHours_147 = workingHours_147;
+        }
+
+        // Phương thức get số giờ làm việc
+        public int GetWorkingHours_147()
+        {
+            return this.workingHours_147;
+        }
+
+        // Ghi đè phương thức tính lương: số giờ làm * lương mỗi giờ
+        public override int CalculateSalary_147()
+        {
+            return workingHours_147 * paymentPerHour_147;
+        }
+    }
+
+    // Class con FullTimeEmployee_147 kế thừa từ Employee_147 (Nhân viên toàn thời gian)
+    public class FullTimeEmployee_147 : Employee_147
+    {
+        // Constructor khởi tạo giá trị
+        public FullTimeEmployee_147(string name_147, int paymentPerHour_147)
+            : base(name_147, paymentPerHour_147) { }
+
+        // Ghi đè phương thức tính lương: Nhân viên full-time luôn làm 8 giờ/ngày
+        public override int CalculateSalary_147()
+        {
+            return 8 * paymentPerHour_147;
+        }
+    }
+
     internal class Program
     {
         static void Main(string[] args)
